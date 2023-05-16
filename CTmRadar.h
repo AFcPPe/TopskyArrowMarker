@@ -5,9 +5,21 @@
 #ifndef TOPSKYARROWMARKER_CTMRADAR_H
 #define TOPSKYARROWMARKER_CTMRADAR_H
 
+#include <list>
 #include "EuroScopePlugIn.h"
 
 namespace EuroScopePlugIn {
+
+    struct Arrow {
+        CPosition startPos;
+        CPosition endPos;
+        CPosition startSidePos1;
+        CPosition startSidePos2;
+        CPosition endSidePos1;
+        CPosition endSidePos2;
+        CPosition endOutPos1;
+        CPosition endOutPos2;
+    };
 
     class CTmRadar :public CRadarScreen{
     public:
@@ -17,18 +29,11 @@ namespace EuroScopePlugIn {
         void OnAsrContentToBeClosed() override;
         void dolog(const char*);
         void OnButtonDownScreenObject(int ObjectType, const char *sObjectId, POINT Pt, RECT Area, int Button) override;
-        bool drawing = false;
+        int drawing = 0;
         int size = 0;
-        float angle=0;
-        CPosition startPos;
-        CPosition endPos;
         void OnOverScreenObject(int ObjectType, const char *sObjectId, POINT Pt, RECT Area) override;
-        CPosition startSidePos1;
-        CPosition startSidePos2;
-        CPosition endSidePos1;
-        CPosition endSidePos2;
-        CPosition endOutPos1;
-        CPosition endOutPos2;
+        Arrow *currentArrow;
+        std::list<Arrow> arrows;
     };
 
 } // EuroScopePlugIn
